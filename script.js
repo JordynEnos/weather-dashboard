@@ -153,3 +153,66 @@ var displayForecastData = function(data) {
     }
 };
 
+var getCityData = function(city) {
+    event.preventDefault();
+    
+    //current conditions in user-entered city//using it to get long and latitude for One call weather API url
+    var cityInfoUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=" + APIkey;
+
+    //make a request to the url
+    fetch(cityInfoUrl).then(function(response) {
+        //if response is okay, no errors found
+        if (response.ok) {
+            response.json().then(function(data) {
+            console.log(data);
+
+    //variables set for data needed from this pull 
+    var cityName = data.name;
+    var latitude = data.coord.lat;
+    var longitude = data.coord.lon;
+    
+    //check if city exists in storage/array -- update it if not
+    var prevSearch = cities.includes(cityName)
+    if (!prevSearch) {
+        cities.push(cityName)
+        saveCities()
+        displaySearchedCities(cityName)
+    }
+
+    getWeatherData(cityName,latitude,longitude);
+
+    });
+
+    //if city name is invalid return error message
+    } else { 
+        alert("Ruh Roh! That city wasn't found!")
+        cityFormEl.reset()
+     }
+   });
+};
+
+var getWeatherData = function(city,latitude,longitude) { 
+    ///5-day forecast API
+    var forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial&exclude=minutely,hourly&appid=" + APIkey;
+        
+    fetch(forecastUrl).then(function(response) {
+        response.json().then(function(data) {
+            console.log(data);
+
+        displayCurrentData(city, data);
+        displayForecastData(data);
+
+        });
+    });
+};
+
+//load previously searched cities on page load
+loadCities()
+
+//form submit listener when user enters city
+cityFormEl.addEventListener("submit", function() {
+    cityInput = cityInputEl.value.trim();
+    getCityData(cityInput);
+})
+
+
