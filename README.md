@@ -18,8 +18,13 @@ THEN I am again presented with current and future conditions for that city
 
 ## Code
 
+- HTML
+- CSS
+- JS
 
 ## API
 
+- OpenWeather
 
 ## Deployed Application
+
