@@ -15,6 +15,7 @@ THEN I am again presented with current and future conditions for that city
 
 ## Usage (Screenshot)
 
+![Screenshot of Deployed Application](https://github.com/JordynEnos/jordyn-enos-portfolio/blob/c307c12f9cb3ddd445f50100610bc70db5317147/assets/images/jordyn-enos-portfolio-screenshot.png)
 
 ## Code
 
